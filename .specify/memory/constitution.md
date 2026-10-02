@@ -1,50 +1,44 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version: 0.1.0 → 1.0.0
+- Modified principles: N/A (initial constitution)
+- Added sections: Core Principles, Project Constraints, Development Workflow
+- Removed sections: placeholder template content
+- Follow-up TODOs: none
+-->
+
+# RSS Feed Reader Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Purpose-Driven MVP
+The project exists to validate simple RSS subscription management in a minimal ASP.NET Core + Blazor application. Every feature and code change must serve the MVP goal of adding a feed URL and displaying the resulting subscription list. We will not broaden scope into feed parsing, persistence, or polished UI unless the minimal working requirement is complete and accepted.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Security-First External Data Handling
+All code that touches external network input, feed content, URLs, or user-provided data must treat that data as untrusted. Validate inputs at the boundary, avoid unsafe HTML rendering, and prefer explicit parsing and safe defaults. The project must not introduce dangerous behavior such as arbitrary URL execution, unescaped content injection, or accepting untrusted data without a clear handling strategy.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Maintainable Architecture and Separation of Concerns
+Backend and frontend responsibilities must stay clearly separated. The API owns request handling and business logic for subscriptions; the UI owns interaction and display; shared concerns must remain minimal and documented. We will favor simple, readable C# types and small, well-named components over clever abstractions that are harder to maintain.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Code Quality and Reviewable Delivery
+All implementation work must be readable, testable, and consistent with the technology stack. Use clear naming, narrow scope, and small, reviewable commits. New features must be easy for another developer to understand without requiring hidden project knowledge. If a change adds complexity, it must be justified by a project requirement or a clear technical necessity.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Testability and Verification Before Completion
+Features are not considered complete until they are checked against the relevant behavior. For the MVP, this means verifying the UI can add a subscription and the list updates correctly, and validating the backend and frontend still run without configuration or routing errors. Automated tests are required for logic that is risk-prone or likely to regress; manual verification is required for UI and integration flows.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Project Constraints
+The project is intentionally minimal and intentionally scoped for a local proof-of-concept. The application may use in-memory storage for the MVP; it must not assume future production requirements are in place without explicit follow-up work. The technology choices in ASP.NET Core and Blazor must support future extension without forcing a rewrite, but the current implementation must stay lean and avoid unneeded dependencies.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+1. Start from the MVP requirement and verify scope before implementation.
+2. Keep feature work aligned with the project stack and avoid unnecessary architecture churn.
+3. Confirm configuration consistency before testing: backend port, frontend base URL, and CORS settings must agree.
+4. Validate routing and startup behavior before UI work proceeds, especially after project scaffolding or template cleanup.
+5. Document and defer non-MVP capabilities such as persistence, polling, and richer feed handling until the core subscription flow is proven.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs all project decisions related to architecture, quality, and scope. Any change to project principles, required behaviors, or delivery standards must be documented in the constitution with clear rationale and a version update. The project must prioritize security, maintainability, and code quality over speed alone, and any deviation from this document requires explicit review and justification.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+All work must be checked against the governing principles before completion. If a change broadens scope beyond the MVP, it must be explicitly justified, named as a deferred enhancement, and tracked separately from the base requirement. Complexity, configuration drift, and undocumented shortcuts are not acceptable without review.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-10-02 | **Last Amended**: 2026-10-02
