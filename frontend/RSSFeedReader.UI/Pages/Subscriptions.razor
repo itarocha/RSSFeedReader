@@ -1,0 +1,91 @@
+@page "/"
+@using RSSFeedReader.UI.Models
+@using RSSFeedReader.UI.Services
+@inject SubscriptionApiClient ApiClient
+
+<PageTitle>RSS Feed Reader</PageTitle>
+
+<h1>RSS Feed Reader</h1>
+
+<EditForm Model="@subscriptionInput" OnValidSubmit="HandleSubmitAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="feedUrl" class="form-label">Feed URL</label>
+        <InputText id="feedUrl" class="form-control" @bind-Value="subscriptionInput.Url" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" disabled="@isSubmitting">Add subscription</button>
+</EditForm>
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger mt-3">@errorMessage</div>
+}
+
+@if (subscriptions.Count == 0)
+{
+    <p class="mt-4">No subscriptions yet.</p>
+}
+else
+{
+    <ul class="mt-4 list-group">
+        @foreach (var subscription in subscriptions)
+        {
+            <li class="list-group-item">@subscription.Url</li>
+        }
+    </ul>
+}
+
+@code {
+    private readonly SubscriptionFormModel subscriptionInput = new();
+    private readonly List<SubscriptionModel> subscriptions = [];
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSubscriptionsAsync();
+    }
+
+    private async Task HandleSubmitAsync()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+
+        try
+        {
+            await ApiClient.AddSubscriptionAsync(subscriptionInput.Url.Trim());
+            subscriptionInput.Url = string.Empty;
+            await LoadSubscriptionsAsync();
+        }
+        catch (InvalidOperationException ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private async Task LoadSubscriptionsAsync()
+    {
+        try
+        {
+            subscriptions.Clear();
+            var items = await ApiClient.GetSubscriptionsAsync();
+            subscriptions.AddRange(items);
+        }
+        catch (Exception)
+        {
+            subscriptions.Clear();
+        }
+    }
+
+    private sealed class SubscriptionFormModel
+    {
+        public string Url { get; set; } = string.Empty;
+    }
+}

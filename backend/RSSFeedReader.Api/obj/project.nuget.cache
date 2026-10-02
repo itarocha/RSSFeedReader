@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Mq2RUco8PX4=",
+  "success": true,
+  "projectFilePath": "/home/itamar/projetos_ia/TrainingProjects/RSSFeedReader/backend/RSSFeedReader.Api/RSSFeedReader.Api.csproj",
+  "expectedPackageFiles": [
+    "/home/itamar/.nuget/packages/microsoft.aspnetcore.openapi/10.0.12/microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "/home/itamar/.nuget/packages/microsoft.openapi/2.12.0/microsoft.openapi.2.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}
